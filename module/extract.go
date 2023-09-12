@@ -77,7 +77,18 @@ func (v *tagExtractor) VisitOneOf(o pgs.OneOf) (pgs.Visitor, error) {
 
 func (v *tagExtractor) VisitField(f pgs.Field) (pgs.Visitor, error) {
 	var tval string
-	ok, err := f.Extension(tagger.E_Tags, &tval)
+	// tags
+	tagsOk, err := f.Extension(tagger.E_Tags, &tval)
+	if err != nil {
+		return nil, err
+	}
+	var validateTag string
+	validateOk, err := f.Extension(tagger.E_Validate, &validateTag)
+	if err != nil {
+		return nil, err
+	}
+	var labelTag string
+	labelOk, err := f.Extension(tagger.E_Label, &labelTag)
 	if err != nil {
 		return nil, err
 	}
@@ -92,35 +103,63 @@ func (v *tagExtractor) VisitField(f pgs.Field) (pgs.Visitor, error) {
 	}
 
 	tags := structtag.Tags{}
-	if len(v.autoAddTags) > 0 {
-		for tag, transform := range v.autoAddTags {
-			t := structtag.Tag{
-				Key:     tag,
-				Name:    transform(v.Context.Name(f)).String(),
-				Options: nil,
+
+	if tagsOk {
+		if len(v.autoAddTags) > 0 {
+			for tag, transform := range v.autoAddTags {
+				t := structtag.Tag{
+					Key:     tag,
+					Name:    transform(v.Context.Name(f)).String(),
+					Options: nil,
+				}
+				if err := tags.Set(&t); err != nil {
+					v.DebuggerCommon.Fail("Error without tag", err)
+				}
 			}
-			if err := tags.Set(&t); err != nil {
-				v.DebuggerCommon.Fail("Error without tag", err)
+		}
+		newTags, err := structtag.Parse(tval)
+		v.CheckErr(err)
+		for _, tag := range newTags.Tags() {
+			if err := tags.Set(tag); err != nil {
+				v.DebuggerCommon.Fail("Error with tag: ", err)
 			}
 		}
 	}
-
-	if !ok {
-		v.tags[msgName][v.Context.Name(f).String()] = &tags
-		return v, nil
-	}
-
-	newTags, err := structtag.Parse(tval)
-	v.CheckErr(err)
-	for _, tag := range newTags.Tags() {
+	if validateOk {
+		tag := &structtag.Tag{
+			Key:     "validate",
+			Name:    validateTag,
+			Options: nil,
+		}
 		if err := tags.Set(tag); err != nil {
-			v.DebuggerCommon.Fail("Error with tag: ", err)
+			v.DebuggerCommon.Fail("Error with validate tag: ", err)
 		}
 	}
-
+	if labelOk {
+		tag := &structtag.Tag{
+			Key:     "label",
+			Name:    labelTag,
+			Options: nil,
+		}
+		if err := tags.Set(tag); err != nil {
+			v.DebuggerCommon.Fail("Error with label tag: ", err)
+		}
+	} else if validateOk {
+		location := f.SourceCodeInfo().Location()
+		comment := location.LeadingComments
+		if comment != nil && *comment != "" {
+			tag := &structtag.Tag{
+				Key:  "label",
+				Name: strings.ReplaceAll(strings.Trim(*comment, " "), "\n", ""),
+			}
+			if err := tags.Set(tag); err != nil {
+				v.DebuggerCommon.Fail("Error with comments", err)
+			}
+		}
+	}
 	v.tags[msgName][v.Context.Name(f).String()] = &tags
-
 	return v, nil
+
 }
 
 func (v *tagExtractor) Extract(f pgs.File) StructTags {

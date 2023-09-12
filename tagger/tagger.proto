@@ -10,6 +10,8 @@ option go_package = "github.com/srikrsna/protoc-gen-gotag/tagger;tagger";
 extend google.protobuf.FieldOptions {
     // Multiple Tags can be specified.
     string tags = 847939;
+    string validate = 847940;
+    string label = 847941;
 }
 
 extend google.protobuf.OneofOptions {
