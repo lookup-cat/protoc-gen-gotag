@@ -5,9 +5,9 @@ import (
 	"os"
 	"testing"
 
+	"github.com/lookup-cat/protoc-gen-gotag/module"
 	pgs "github.com/lyft/protoc-gen-star"
 	"github.com/spf13/afero"
-	"github.com/srikrsna/protoc-gen-gotag/module"
 )
 
 func TestExtract(t *testing.T) {
