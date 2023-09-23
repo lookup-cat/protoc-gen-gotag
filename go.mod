@@ -1,4 +1,4 @@
-module github.com/lookup-cat/protoc-gen-gotag
+module hkrd.com/gaorx/protoc-gen-gotag
 
 go 1.16
 
