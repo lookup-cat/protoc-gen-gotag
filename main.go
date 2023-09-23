@@ -2,10 +2,10 @@ package main
 
 import (
 	plugin_go "github.com/golang/protobuf/protoc-gen-go/plugin"
-	"github.com/lookup-cat/protoc-gen-gotag/module"
 	pgs "github.com/lyft/protoc-gen-star"
 	pgsgo "github.com/lyft/protoc-gen-star/lang/go"
 	"google.golang.org/protobuf/proto"
+	"hkrd.com/gaorx/protoc-gen-gotag/module"
 )
 
 func main() {

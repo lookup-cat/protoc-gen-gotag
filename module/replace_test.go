@@ -13,7 +13,7 @@ import (
 
 	"github.com/fatih/structtag"
 
-	"github.com/lookup-cat/protoc-gen-gotag/module"
+	"hkrd.com/gaorx/protoc-gen-gotag/module"
 )
 
 var replaceOut = flag.Bool("tag-rep", false, "")

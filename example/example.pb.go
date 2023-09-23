@@ -7,9 +7,9 @@
 package example
 
 import (
-	_ "github.com/lookup-cat/protoc-gen-gotag/tagger"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	_ "hkrd.com/gaorx/protoc-gen-gotag/tagger"
 	reflect "reflect"
 	sync "sync"
 )
