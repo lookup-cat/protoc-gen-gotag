@@ -7,7 +7,7 @@ import (
 	pgs "github.com/lyft/protoc-gen-star"
 	pgsgo "github.com/lyft/protoc-gen-star/lang/go"
 
-	"hkrd.com/gaorx/protoc-gen-gotag/tagger"
+	"gitea.com/gaorx/protoc-gen-gotag/tagger"
 )
 
 type tagExtractor struct {

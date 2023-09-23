@@ -5,9 +5,9 @@ import (
 	"os"
 	"testing"
 
+	"gitea.com/gaorx/protoc-gen-gotag/module"
 	pgs "github.com/lyft/protoc-gen-star"
 	"github.com/spf13/afero"
-	"hkrd.com/gaorx/protoc-gen-gotag/module"
 )
 
 func TestExtract(t *testing.T) {
