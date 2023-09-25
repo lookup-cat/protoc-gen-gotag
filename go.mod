@@ -2,7 +2,7 @@ module gitea.com/hkrd/protoc-gen-gotag
 
 go 1.16
 
-retract v0.6.1
+retract v0.6.2
 
 require (
 	github.com/fatih/structtag v1.2.0
