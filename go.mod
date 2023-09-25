@@ -2,8 +2,6 @@ module gitea.com/hkrd/protoc-gen-gotag
 
 go 1.16
 
-retract v0.6.3
-
 require (
 	github.com/fatih/structtag v1.2.0
 	github.com/golang/protobuf v1.5.2
