@@ -1,7 +1,7 @@
 package main
 
 import (
-	"gitea.com/gaorx/protoc-gen-gotag/module"
+	"gitea.com/hkrd/protoc-gen-gotag/module"
 	plugin_go "github.com/golang/protobuf/protoc-gen-go/plugin"
 	pgs "github.com/lyft/protoc-gen-star"
 	pgsgo "github.com/lyft/protoc-gen-star/lang/go"

@@ -1,4 +1,4 @@
-module gitea.com/gaorx/protoc-gen-gotag
+module gitea.com/hkrd/protoc-gen-gotag
 
 go 1.16
 
